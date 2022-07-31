@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package testbed;
+
+option go_package = "github.com/brotherlogic/testbed/proto";
+
+message Hello {
+  string body = 1;
+} 
+
+service HelloService {
+  rpc SayHello(Hello) returns (Hello) {};
+}
