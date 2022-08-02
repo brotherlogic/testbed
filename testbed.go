@@ -13,7 +13,7 @@ type Server struct {
 }
 
 func (s *Server) SayHello(ctx context.Context, hello *pb.Hello) (*pb.Hello, error) {
-	return &pb.Hello{Body: "Hello there person I know"}, nil
+	return &pb.Hello{Body: "Hello there person I know called"}, nil
 }
 
 func main() {
