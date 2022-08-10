@@ -32,5 +32,5 @@ jobs:
         with:
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: "${{ secrets.REGISTRY_SHORT }}/brotherlogic/testbed:latest"
+          tags: "${{ secrets.REGISTRY_URL }}/brotherlogic/testbed:latest"
           platforms: linux/arm/v7,linux/arm64
