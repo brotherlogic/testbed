@@ -2,18 +2,34 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
 	pb "github.com/brotherlogic/testbed/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Server struct {
 }
 
 func (s *Server) SayHello(ctx context.Context, hello *pb.Hello) (*pb.Hello, error) {
-	return &pb.Hello{Body: "Hello there person I know called Simon the Pieman"}, nil
+	if !hello.GetRecurse() {
+		return &pb.Hello{Body: "RECURSE!"}, nil
+	}
+	conn, err := grpc.Dial("testbed", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+	client := pb.NewHelloServiceClient(conn)
+	res, err := client.SayHello(ctx, &pb.Hello{Recurse: false})
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.Hello{Body: fmt.Sprintf("Hello there person I know called Simon the Pieman: %v", res.GetBody())}, nil
 }
 
 func main() {

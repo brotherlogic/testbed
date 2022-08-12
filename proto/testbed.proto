@@ -6,6 +6,7 @@ option go_package = "github.com/brotherlogic/testbed/proto";
 
 message Hello {
   string body = 1;
+  bool recurse = 2;
 } 
 
 service HelloService {

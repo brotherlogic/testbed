@@ -16,7 +16,7 @@ func main() {
 	}
 
 	client := pb.NewHelloServiceClient(conn)
-	res, err := client.SayHello(context.Background(), &pb.Hello{})
+	res, err := client.SayHello(context.Background(), &pb.Hello{Recurse: true})
 
 	log.Printf("%v -> %v", res, err)
 }
