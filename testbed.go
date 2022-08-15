@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 
 	pb "github.com/brotherlogic/testbed/proto"
 	"google.golang.org/grpc"
@@ -14,9 +15,18 @@ import (
 type Server struct {
 }
 
+func getServerName() string {
+	hn, err := os.Hostname()
+	if err == nil {
+		return hn
+	}
+
+	return fmt.Sprintf("ERRR %v", err)
+}
+
 func (s *Server) SayHello(ctx context.Context, hello *pb.Hello) (*pb.Hello, error) {
 	if !hello.GetRecurse() {
-		return &pb.Hello{Body: "RECURSE!"}, nil
+		return &pb.Hello{Body: fmt.Sprintf("RECURSE! from %v", getServerName())}, nil
 	}
 	conn, err := grpc.Dial("testbed:8081", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -29,7 +39,7 @@ func (s *Server) SayHello(ctx context.Context, hello *pb.Hello) (*pb.Hello, erro
 		return nil, err
 	}
 
-	return &pb.Hello{Body: fmt.Sprintf("Hello there person I know called Simon the Pieman: %v", res.GetBody())}, nil
+	return &pb.Hello{Body: fmt.Sprintf("Hello there person I know called %v the Pieman: %v", getServerName(), res.GetBody())}, nil
 }
 
 func main() {
