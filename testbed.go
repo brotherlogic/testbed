@@ -18,7 +18,7 @@ func (s *Server) SayHello(ctx context.Context, hello *pb.Hello) (*pb.Hello, erro
 	if !hello.GetRecurse() {
 		return &pb.Hello{Body: "RECURSE!"}, nil
 	}
-	conn, err := grpc.Dial("testbed", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("testbed:8081", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, err
 	}
