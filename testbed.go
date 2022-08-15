@@ -43,7 +43,7 @@ func (s *Server) SayHello(ctx context.Context, hello *pb.Hello) (*pb.Hello, erro
 }
 
 func main() {
-	lis, err := net.Listen("tcp", ":8081")
+	lis, err := net.Listen("tcp", ":8082")
 	if err != nil {
 		log.Fatalf("Unable to server: %v", err)
 	}
