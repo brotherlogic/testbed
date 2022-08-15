@@ -24,7 +24,7 @@ WORKDIR /
 
 COPY --from=build /testbed /testbed
 
-EXPOSE 8081
+EXPOSE 8082
 
 USER nonroot:nonroot
 
